@@ -7,8 +7,8 @@
 #include <semaphore.h>
 #include "buffer_sem.h"
 
-void *producer(void);
-void *consumer(void);
+void *producer(void*);
+void *consumer(void*);
 
 int main() {
     printf("Testing enqueuing before initalizing\n");
@@ -75,7 +75,7 @@ int main() {
 }
 
 
-void *producer(void){
+void *producer(void*){
     int num = 0; //num in data, goes from 0-9
     for(int i = 0; i < 1000; i++){ //loops 1000 times
         usleep(rand() % 10000); //waits for 0-10 millseconds
@@ -96,7 +96,7 @@ void *producer(void){
 }
 
 
-void *consumer(void){
+void *consumer(void*){
     for(int i = 0; i < 1000; i++){ //loops 1000 times
         usleep(rand() % 10000); //waits for 0-10 millseconds
         char data[1024];
