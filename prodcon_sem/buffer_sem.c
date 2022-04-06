@@ -8,6 +8,7 @@ static bb_buffer_421_t buffer;
 static struct semaphore mutex;
 static struct semaphore fill_count;
 static struct semaphore empty_count;
+int empty; // number of empty spaces in buffer
 
 SYSCALL_DEFINE0(init_buffer_sem_421){
     if(buffer.read != NULL){ //if buffer is already initalized, init_buffer_421 returns -1 ,fails
@@ -15,6 +16,7 @@ SYSCALL_DEFINE0(init_buffer_sem_421){
         return -1;
     }else{
         int i;
+	empty = 20; // number of empty spaces in buffer initizlie to 20
         bb_node_421_t *curr;
         bb_node_421_t *newNode;
         sema_init(&mutex, 1); //initalize the semasphore
@@ -53,10 +55,14 @@ SYSCALL_DEFINE1(enqueue_buffer_sem_421, char*, data){
         down(&mutex);
         if(copy_from_user(buffer.write->data, data, DATA_LENGTH) != 0){ //copy_from_user
             printk("Enqueue failed.\n");
-        }
+        }else{
+	   printk("Produced:\n%s\n",buffer.write->data);
+	}
+	empty--; //decrement number of empty spaces in buffer
         buffer.length++; //increment length
         buffer.write = buffer.write->next; //move write to next empty node
         printk("%d items in buffer\n",buffer.length);
+	printk("%d empty spaces in buffer\n",empty);
 	up(&mutex);
         up(&fill_count); //if buffer is no longer full, enqueue_buffer_421 is unlocked and continues function
         return 0;
@@ -72,10 +78,14 @@ SYSCALL_DEFINE1(dequeue_buffer_sem_421, char*, data){
         down(&mutex);
         if(copy_to_user(data, buffer.read->data, DATA_LENGTH) != 0){ //copy_to_user
             printk("Dequeue failed.\n");
-        }
+        }else{
+	   printk("Consumed:\n%s\n",buffer.read->data);
+	}
+	empty++; //increment number of empty spaces in buffer
         buffer.length--; //decrements length
         buffer.read = buffer.read->next; //move read to next non-empty node
         printk("%d items in buffer\n",buffer.length);
+	printk("%d empty spaces in buffer\n",empty);
         up(&mutex);
         up(&empty_count); //if buffer is no longerr empty, dequeue_buffer_421 is unlocked and continues function
         return 0;
