@@ -103,10 +103,10 @@ void *producer(void*){
     for(int i = 0; i < 1000; i++){ //loops 1000 times
         usleep(rand() % 10000); //waits for 0-10 millseconds
         char data[1024];
-        for(int j = 0; j < DATA_LENGTH; j++){ //create a data of num of a size of 1024
+        for(int j = 0; j < 1024; j++){ //create a data of num of a size of 1024
             data[j] = num + '0';
         }
-        data[DATA_LENGTH - 1] = '\0'; //null termaintor
+        data[1023] = '\0'; //null termaintor
         printf(":: Enqueueing element into buffer. ::\n");
         enqueue_buffer_421(data); //add data
         printf("%s\n",data);
