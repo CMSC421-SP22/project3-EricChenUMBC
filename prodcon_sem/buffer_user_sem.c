@@ -17,10 +17,11 @@ long init_buffer_421(void){
         printf("Buffer is already exists\n");
         return -1;
     }else{
+        bb_node_421_t *curr;
         sem_init(&mutex, 0, 1); //initalize the semasphore
         sem_init(&empty_count, 0, SIZE_OF_BUFFER); //initalize empty_count
         sem_init(&fill_count, 0, 0); //initalize fill_count
-        bb_node_421_t *curr = NULL; //point to current node
+        curr = NULL; //point to current node
         buffer.length = 0; //initalize buffer length to 0
         for(int i = 0; i < SIZE_OF_BUFFER; i++){ //allocate 20 nodes in circular buffer
             bb_node_421_t *newNode = NULL;
@@ -54,10 +55,10 @@ long enqueue_buffer_421(char * data) {
         strncpy(buffer.write->data,data,DATA_LENGTH); //add data into write node's data
         buffer.length++; //increment length
         buffer.write = buffer.write->next; //move write to next empty node
-        printf("%d items in buffer\n",buffer.length);
-	    sem_post(&mutex);
+	sem_post(&mutex);
         sem_post(&fill_count); //if buffer is no longer full, enqueue_buffer_421 is unlocked and continues function
-        return 0;
+        printf("%d items in buffer\n",buffer.length);
+	return 0;
     }
 }
 
@@ -71,10 +72,10 @@ long dequeue_buffer_421(char * data) {
         strcpy(data,buffer.read->data); //writes pointer write node's data into data
         buffer.length--; //decrements length
         buffer.read = buffer.read->next; //move read to next non-empty node
-	    printf("%d items in buffer\n",buffer.length);
-	    sem_post(&mutex);
+	sem_post(&mutex);
         sem_post(&empty_count); //if buffer is no longerr empty, dequeue_buffer_421 is unlocked and continues function
-        return 0;
+        printf("%d items in buffer\n",buffer.length);
+	return 0;
     }
 }
 
@@ -84,7 +85,8 @@ long delete_buffer_421(void){
         printf("Buffer does not exist\n");
         return -1;
     }else{
-        bb_node_421_t *curr = buffer.read; //start at read's node
+        bb_node_421_t *curr;
+        curr = buffer.read; //start at read's node
         for(int i = 0; i < SIZE_OF_BUFFER; i++){ //delete every node in the buffer
             bb_node_421_t *temp;
             if(curr->next != NULL){

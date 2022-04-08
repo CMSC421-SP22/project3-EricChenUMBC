@@ -11,19 +11,19 @@ static struct semaphore empty_count;
 int empty; // number of empty spaces in buffer
 
 SYSCALL_DEFINE0(init_buffer_sem_421){
+    bb_node_421_t *curr;
+    bb_node_421_t *newNode;
     if(buffer.read != NULL){ //if buffer is already initalized, init_buffer_421 returns -1 ,fails
         printk("Buffer is already exists\n");
         return -1;
     }else{
         int i;
 	empty = 20; // number of empty spaces in buffer initizlie to 20
-        bb_node_421_t *curr;
-        bb_node_421_t *newNode;
         sema_init(&mutex, 1); //initalize the semasphore
         sema_init(&empty_count, SIZE_OF_BUFFER); //initalize empty_count
         sema_init(&fill_count, 0); //initalize fill_count
-        curr = NULL; //point to current node
         buffer.length = 0; //initalize buffer length to 0
+	curr = NULL; //point to current node
         for(i = 0; i < SIZE_OF_BUFFER; i++){ //allocate 20 nodes in circular buffer
             newNode = NULL;
             newNode = kmalloc(sizeof(bb_node_421_t), GFP_KERNEL); //create node
@@ -56,7 +56,7 @@ SYSCALL_DEFINE1(enqueue_buffer_sem_421, char*, data){
         if(copy_from_user(buffer.write->data, data, DATA_LENGTH) != 0){ //copy_from_user
             printk("Enqueue failed.\n");
         }else{
-	   printk("Produced:\n%s\n",buffer.write->data);
+	   printk("Produced: %c\n",buffer.write->data[1]);
 	}
 	empty--; //decrement number of empty spaces in buffer
         buffer.length++; //increment length
@@ -79,7 +79,7 @@ SYSCALL_DEFINE1(dequeue_buffer_sem_421, char*, data){
         if(copy_to_user(data, buffer.read->data, DATA_LENGTH) != 0){ //copy_to_user
             printk("Dequeue failed.\n");
         }else{
-	   printk("Consumed:\n%s\n",buffer.read->data);
+	   printk("Consumed: %c\n",buffer.read->data[1]);
 	}
 	empty++; //increment number of empty spaces in buffer
         buffer.length--; //decrements length
