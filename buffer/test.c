@@ -56,35 +56,35 @@ int main() { //Test cases
     }else{
         printf("Test failed\n");
     }
-
+    
     printf("Test deleting buffer\n");
     if(delete_buffer_421() == -1){
         printf("Test failed\n");
     }else{
         printf("Test passed\n");
     }
-
+    
     printf("Testing adding an extra node to deleted buffer\n");
     if(insert_buffer_421(20) == -1){
         printf("Test passed\n");
     }else{
         printf("Test failed\n");
     }
-
+    
     printf("Testing printing deleted buffer\n");
     if(print_buffer_421() == -1){
         printf("Test passed\n");
     }else{
         printf("Test failed\n");
     }
-
+    
     printf("Testing deleting an already deleted buffer\n");
     if(delete_buffer_421() == -1){
         printf("Test passed\n");
     }else{
         printf("Test failed\n");
     }
-
+    
     printf("Testing initalizing and initalizing again\n");
     init_buffer_421();
     if(init_buffer_421() == -1){
@@ -92,19 +92,38 @@ int main() { //Test cases
     }else{
         printf("Test failed\n");
     }
-
+    
+    printf("Testing printing an empty buffer\n");
+    if(print_buffer_421() == 0){
+        printf("Test passed\n");
+    }else{
+        printf("Test failed\n");
+    }
+    insert_buffer_421(0);
+    printf("Testing printing a buffer with one node\n");
+    if(print_buffer_421() == 0){
+        printf("Test passed\n");
+    }else{
+        printf("Test failed\n");
+    }
+    
     printf("Testing inserting some nodes, and deleting\n");
     for(int i = 1; i <=5; i++){
         if(insert_buffer_421(i) == -1){
             printf("Test failed\n");
         }
     }
-    print_buffer_421();
+    if(print_buffer_421() == 0){
+        printf("Test passed\n");
+    }else{
+        printf("Test failed\n");
+    }
+    printf("Testing deleting a buffer\n");
     if(delete_buffer_421() == -1){
         printf("Test failed\n");
     }else{
         printf("Test passed\n");
     }
-
+    
     return 0;
 }

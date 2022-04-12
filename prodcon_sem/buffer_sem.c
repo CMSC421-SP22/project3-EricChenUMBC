@@ -56,7 +56,8 @@ SYSCALL_DEFINE1(enqueue_buffer_sem_421, char*, data){
         if(copy_from_user(buffer.write->data, data, DATA_LENGTH) != 0){ //copy_from_user
             printk("Enqueue failed.\n");
         }else{
-	   printk("Produced: %c\n",buffer.write->data[1]);
+	    buffer.write->data[DATA_LENGTH - 1] = '\0';
+	    printk("Produced: %c\n",buffer.write->data[1]);
 	}
 	empty--; //decrement number of empty spaces in buffer
         buffer.length++; //increment length
@@ -79,7 +80,7 @@ SYSCALL_DEFINE1(dequeue_buffer_sem_421, char*, data){
         if(copy_to_user(data, buffer.read->data, DATA_LENGTH) != 0){ //copy_to_user
             printk("Dequeue failed.\n");
         }else{
-	   printk("Consumed: %c\n",buffer.read->data[1]);
+	   printk("Consumed: %c\n",data[1]);
 	}
 	empty++; //increment number of empty spaces in buffer
         buffer.length--; //decrements length

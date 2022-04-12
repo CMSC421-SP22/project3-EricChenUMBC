@@ -62,6 +62,25 @@ int main() {
     }else{
         printf("Test failed\n");
     }
+    char datain[1024];
+    printf("Testing enqueuing the buffer\n");
+    for(int j = 0; j < 1024; j++){ //create a data of num of a size of 1024
+        datain[j] = '0';
+    }
+    if(enqueue_buffer_421(datain) == 0){
+        printf("Test passed\n");
+        printf("Produced: %c\n",datain[1]);
+    }else{
+        printf("Test failed\n");
+    }
+    char dataout[1024];
+    printf("Testing dequeuing the buffer\n");
+    if(dequeue_buffer_421(dataout) == 0){
+        printf("Test passed\n");
+        printf("Consumed: %s\n",dataout);
+    }else{
+        printf("Test failed\n");
+    }
     delete_buffer_421();
     
     init_buffer_421();
@@ -112,7 +131,7 @@ void *producer(){
         for(int j = 0; j < 1024; j++){ //create a data of num of a size of 1024
             data[j] = num + '0';
         }
-        data[1023] = '\0'; //null termaintor
+        //data[1023] = '\0'; //null termaintor
         printf(":: Enqueueing element into buffer. ::\n");
         enqueue_buffer_421(data); //add data
         printf("%c\n",data[1]);
@@ -130,7 +149,7 @@ void *consumer(){
         char data[1024];
         printf(":: Dequeueing element from buffer. ::\n");
         if(dequeue_buffer_421(data) == 0){ //gets data from buffer
-            printf("%c\n",data[1]);
+            printf("%s\n",data);
         }
     }
 }
