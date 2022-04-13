@@ -59,7 +59,7 @@ long print_buffer_421(void){
         return -1;
     }else{
         node_421_t *curr = buffer.read; //start at read's node
-        for(int i = 0; i < buffer.length; i++){ //print every node in the buffer
+        for(int i = 0; i < SIZE_OF_BUFFER; i++){ //print every node in the buffer
             printf("Current node in buffer: %d\n",curr->data);
             curr = curr->next;
         }

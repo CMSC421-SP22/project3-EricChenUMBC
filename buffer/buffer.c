@@ -61,7 +61,7 @@ SYSCALL_DEFINE0(print_buffer_421){
     }else{
         int i;
         node_421_t *curr = buffer.read; //start at read's node
-        for(i = 0; i < buffer.length; i++){ //print every node in the buffer
+        for(i = 0; i < SIZE_OF_BUFFER; i++){ //print every node in the buffer
             printk("Current node in buffer: %d\n",curr->data);
             curr = curr->next;
         }

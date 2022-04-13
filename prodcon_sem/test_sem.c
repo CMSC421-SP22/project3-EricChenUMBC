@@ -131,7 +131,6 @@ void *producer(){
         for(int j = 0; j < 1024; j++){ //create a data of num of a size of 1024
             data[j] = num + '0';
         }
-        //data[1023] = '\0'; //null termaintor
         printf(":: Enqueueing element into buffer. ::\n");
         enqueue_buffer_421(data); //add data
         printf("%c\n",data[1]);

@@ -44,7 +44,7 @@ int main() { //Test cases
     }
     printf("Testing initalizing, and adding nodes\n");
     init_buffer_421();
-    for(int i = 0; i < 20; i++){
+    for(int i = 1; i < 21; i++){
         if(insert_buffer_421(i) == -1){
             printf("Test failed\n");
         }
@@ -99,7 +99,7 @@ int main() { //Test cases
     }else{
         printf("Test failed\n");
     }
-    insert_buffer_421(0);
+    insert_buffer_421(5);
     printf("Testing printing a buffer with one node\n");
     if(print_buffer_421() == 0){
         printf("Test passed\n");
@@ -125,5 +125,21 @@ int main() { //Test cases
         printf("Test passed\n");
     }
     
+    printf("Testing initalizing, and adding nodes of random numbers\n");
+    int num = 0;
+    init_buffer_421();
+    for(int i = 0; i < 20; i++){
+        num = rand() % 100;
+        if(insert_buffer_421(num) == -1){
+            printf("Test failed\n");
+        }
+    }
+    print_buffer_421();
+    if(delete_buffer_421() == -1){
+        printf("Test failed\n");
+    }else{
+        printf("Test passed\n");
+    }
+
     return 0;
 }
