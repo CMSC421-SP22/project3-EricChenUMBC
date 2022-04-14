@@ -1,3 +1,5 @@
+Eric Chen LD19338 echen5@umbc.edu CMSC 421 Section 2 Tompkins
+
 How to compile user space:
 
 gcc buffer_user.c test_user.c -o test_user
